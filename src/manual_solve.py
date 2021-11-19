@@ -21,7 +21,7 @@ inside it. The output is to resize the grid to the colored sub
 grid and then flip the shape(s) inside the colored grid.
 
 Here we are using solve_1cf80156(x) function to remove the black
-cells from the main grid. Then we are using the flipr method in 
+cells from the main grid. Then we are using the fliplr method in 
 numpy to flip the colored grid.
 
 All the test and training grids are solved correctly.
@@ -321,6 +321,27 @@ def solve_f8a8fe49(x):
                     x[i][j] = 0  # clear original
 
     return x
+
+
+'''
+For some of the solutions above we have used numpy libraries whereas for some 
+we have written with basic python functions. As in these functions we are
+using 2D grids many numpy functions can be used to modify the array. For
+example in the solve_f8a8fe49 function we have not used any libraries for 
+reflecting the grey cells but we could have used numpy functions like flipud
+and fliplr for up/down and left/right reflection. We could have split the numpy
+array into two halves reflected based on the axis and concatenated back. This would 
+generate the output with 4 red cells at incorrect position which we can fix because we
+know the 4 corners of the rectangle.
+
+Some other useful functions for these solutions are rot90 as many of these problems
+involve rotation of the array. We can also use numpy where to match certain conditions
+like in solve_1cf80156 after taking the sum along rows and column we can use np.where(cols != 0)
+or np.where(rows != 0) to get a tuple which has the indices where the values are not 0.
+
+We can also use numpy.diag to get diagonal elements and split and concatenate for splitting 
+and concatenating the arrays.
+'''
 
 
 def main():
