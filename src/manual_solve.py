@@ -338,9 +338,23 @@ Some other useful functions for these solutions are rot90 as many of these probl
 involve rotation of the array. We can also use numpy where to match certain conditions
 like in solve_1cf80156 after taking the sum along rows and column we can use np.where(cols != 0)
 or np.where(rows != 0) to get a tuple which has the indices where the values are not 0.
-
 We can also use numpy.diag to get diagonal elements and split and concatenate for splitting 
 and concatenating the arrays.
+
+Using these useful set of functions we can try to solve the solution for a given task. Here
+the task is seen for the first time and the system has no prior knowledge or experience of
+the task. Yet by using these functions (for example rotation and concatenate for solve_7fe24cdd)
+we can correctly identify the output for all test inputs. The solve_1cf80156 which removes the 
+surrounding 0's (or noise) to get the shape is another useful function. We have directly used this
+in solve_7468f01a as 
+- apply solve_1cf80156
+- apply fliplr
+
+Some other examples (not implemented above):
+ 
+solve_963e52fc: fliplr + concatenate
+solve_28bf18c6: solve_1cf80156 + concatenate (x + x)
+solve_62c24649: fliplr + flipud
 '''
 
 
