@@ -5,19 +5,63 @@ import json
 import numpy as np
 import re
 
+# Name: Subhomoy Sikdar
+# ID: 21250101
+# Github: https://github.com/subhomoysikdar/ARC
+
 ### YOUR CODE HERE: write at least three functions which solve
 ### specific tasks by transforming the input x and returning the
 ### result. Name them according to the task ID as in the three
 ### examples below. Delete the three examples. The tasks you choose
 ### must be in the data/training directory, not data/evaluation.
-def solve_6a1e5592(x):
-    return x
 
-def solve_b2862040(x):
-    return x
 
-def solve_05269061(x):
-    return x
+
+'''
+In this task we are given an abstract shape and we have to find
+out the boundary of the shape. We need to then return the grid
+with only the shape.
+
+We are using numpy sum to project which rows and column have all
+0's. Looking at the sum arrays we get the first and last index
+where the value is not 0. This gives us the start and end row and
+the start and end column. We then return the resized original array
+based on the indices.
+
+All the test and training grids are solved correctly.
+'''
+
+
+def solve_1cf80156(x):
+    rows = np.sum(x, axis=1)
+    cols = np.sum(x, axis=0)
+
+    start_row = 0;
+    end_row = len(rows)
+    start_col = 0;
+    end_col = len(cols)
+
+    for i, v in enumerate(rows):
+        if v != 0:
+            start_row = i
+            break
+
+    for i, v in enumerate(reversed(rows)):
+        if v != 0:
+            end_row = len(rows) - i
+            break
+
+    for i, v in enumerate(cols):
+        if v != 0:
+            start_col = i
+            break
+
+    for i, v in enumerate(reversed(cols)):
+        if v != 0:
+            end_col = len(cols) - i
+            break
+
+    return x[start_row: end_row, start_col:end_col]
 
 
 def main():
@@ -25,16 +69,16 @@ def main():
     # like solve_abcd1234(), and run them.
 
     # regex to match solve_* functions and extract task IDs
-    p = r"solve_([a-f0-9]{8})" 
+    p = r"solve_([a-f0-9]{8})"
     tasks_solvers = []
     # globals() gives a dict containing all global names (variables
     # and functions), as name: value pairs.
-    for name in globals(): 
+    for name in globals():
         m = re.match(p, name)
         if m:
             # if the name fits the pattern eg solve_abcd1234
-            ID = m.group(1) # just the task ID
-            solve_fn = globals()[name] # the fn itself
+            ID = m.group(1)  # just the task ID
+            solve_fn = globals()[name]  # the fn itself
             tasks_solvers.append((ID, solve_fn))
 
     for ID, solve_fn in tasks_solvers:
@@ -43,13 +87,14 @@ def main():
         json_filename = os.path.join(directory, ID + ".json")
         data = read_ARC_JSON(json_filename)
         test(ID, solve_fn, data)
-    
+
+
 def read_ARC_JSON(filepath):
     """Given a filepath, read in the ARC task data which is in JSON
     format. Extract the train/test input/output pairs of
     grids. Convert each grid to np.array and return train_input,
     train_output, test_input, test_output."""
-    
+
     # Open the JSON file and load it 
     data = json.load(open(filepath))
 
@@ -77,7 +122,7 @@ def test(taskID, solve, data):
         yhat = solve(x)
         show_result(x, y, yhat)
 
-        
+
 def show_result(x, y, yhat):
     print("Input")
     print(x)
@@ -93,4 +138,3 @@ def show_result(x, y, yhat):
 
 
 if __name__ == "__main__": main()
-

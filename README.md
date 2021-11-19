@@ -64,3 +64,8 @@ When your output grid is ready, click the green "Submit!" button to check your a
 After you've obtained the correct answer for the current test input grid, you can switch to the next test input grid for the task using the "Next test input" button (if there is any available; most tasks only have one test input).
 
 When you're done with a task, use the "load task" button to open a new task.
+
+### This repository has the solutions to the following problems:
+
+1. **1cf80156** Here we figure out the shape from the given grid
+![1cf80156](apps/img/1cf80156.png)
