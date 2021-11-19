@@ -108,6 +108,36 @@ def solve_67385a82(x):
     return x
 
 
+'''
+In this task we are given a n * n grid with random colors. The final grid is 
+a grid of size 2n * 2n which is composed of 4 original grids. The initial grid
+is same but the right grid is the 90 degree clockwise rotation of the original
+grid. Similarly, the bottom diagonal grid is 180 degree rotation and the bottom
+grid is 270 degree rotation of the original grid. These 4 grids together forms
+the final (n + n) * (n + n) grid.
+
+We are using numpy rot90 function for rotating the original array create the 3
+new grids. We are then joining the original array and 90 degree rotated grid using
+numpy concatenate method. Similarly the below grids are concatenated horizontally.
+The resultant grids are then concatenated vertically to produce the final output.
+
+All the test and training grids are solved correctly.
+'''
+
+
+def solve_7fe24cdd(x):
+    right = np.rot90(x, k=-1)
+    diag = np.rot90(x, k=-2)
+    down = np.rot90(x, k=-3)
+
+    upper = np.concatenate((x, right), axis=1)
+    lower = np.concatenate((down, diag), axis=1)
+
+    x = np.concatenate((upper, lower), axis=0)
+
+    return x
+
+
 def has_neighbours(x, i, j):
     rows = len(x)
     cols = (len(x[0]))

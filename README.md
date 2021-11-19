@@ -78,3 +78,7 @@ When you're done with a task, use the "load task" button to open a new task.
 3. **67385a82** Here we color the joined green cells as blue and leave the isolated ones
 
    ![67385a82](apps/img/67385a82.png)
+
+4. **7fe24cdd** Here we have to rotate the grid clockwise 3 times and join together to form the final grid
+
+   ![7fe24cdd](apps/img/7fe24cdd.png)
