@@ -5,7 +5,6 @@ import json
 import numpy as np
 import re
 
-
 # Name: Subhomoy Sikdar
 # ID: 21250101
 # Github: https://github.com/subhomoysikdar/ARC
@@ -27,6 +26,7 @@ numpy to flip the colored grid.
 
 All the test and training grids are solved correctly.
 '''
+
 
 def solve_7468f01a(x):
     x = solve_1cf80156(x)
@@ -79,6 +79,45 @@ def solve_1cf80156(x):
             break
 
     return x[start_row: end_row, start_col:end_col]
+
+
+'''
+In this task we are given a grid where there are random green cells.
+If these green cells are connected to other green cells (not diaginally)
+then mark them as blue. The output is a grid of same size where the
+connected green cells are marked blue and isolated green cells remain green.
+
+Here we are checking for every element if it has any adjoining elements
+(not diagonal) and mark them in blue else leave them green. This is
+done by the has_neighbours function where we check if the right/left/up/down
+cells have a non-zero value. Boundaries are considered 0 i.e. the first cell
+has 0 element as top and left. The code does not use any special library.
+
+All the test and training grids are solved correctly.
+
+P.S. The input to the function is correct but the input that gets printed is incorrect.
+'''
+
+
+def solve_67385a82(x):
+    for i, row in enumerate(x):
+        for j, item in enumerate(row):
+            if x[i][j] == 3 and has_neighbours(x, i, j):
+                x[i][j] = 8
+
+    return x
+
+
+def has_neighbours(x, i, j):
+    rows = len(x)
+    cols = (len(x[0]))
+
+    left = False if j == 0 else x[i][j - 1] != 0
+    right = False if j == cols - 1 else x[i][j + 1] != 0
+    up = False if i == 0 else x[i - 1][j] != 0
+    down = False if i == rows - 1 else x[i + 1][j] != 0
+
+    return left or right or up or down
 
 
 def main():
