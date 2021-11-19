@@ -108,6 +108,18 @@ def solve_67385a82(x):
     return x
 
 
+def has_neighbours(x, i, j):
+    rows = len(x)
+    cols = (len(x[0]))
+
+    left = False if j == 0 else x[i][j - 1] != 0
+    right = False if j == cols - 1 else x[i][j + 1] != 0
+    up = False if i == 0 else x[i - 1][j] != 0
+    down = False if i == rows - 1 else x[i + 1][j] != 0
+
+    return left or right or up or down
+
+
 '''
 In this task we are given a n * n grid with random colors. The final grid is 
 a grid of size 2n * 2n which is composed of 4 original grids. The initial grid
@@ -138,16 +150,60 @@ def solve_7fe24cdd(x):
     return x
 
 
-def has_neighbours(x, i, j):
-    rows = len(x)
-    cols = (len(x[0]))
+'''
+In this task we are given a grid with some random cells marked blue. We have to check
+if the blue cells can be joined with other blue cells horizontally or vertically.
+Isolated cells will be left as is. The final output is a grid of same size where
+the blue cells which have any left, right, up or down blue cells further along
+the grid are joined by marking the intermediate cells as blue.
 
-    left = False if j == 0 else x[i][j - 1] != 0
-    right = False if j == cols - 1 else x[i][j + 1] != 0
-    up = False if i == 0 else x[i - 1][j] != 0
-    down = False if i == rows - 1 else x[i + 1][j] != 0
+We figure out if there are blue cells which can be connected by looking at the
+right elements and bottom elements. We start from the topmost corner and go over
+each element. We are looking only → and ↓ directions but because we started from
+the top corner we do not need to look in the up or left direction as those elements
+would already been iterated. Also when we see an element in blue (cell value 8) we start
+looking from the end of the array for any occurrnce of 8. This is because if we
+have a scenario like [0, 0, 8, 0, 8, 0, 0, 8, 0] we don't stop at 5th element. Rather we 
+look backwards so that we get the 8 occurring in 8th position (index 7). We
+keep a list of these elements which needs to be joined by row or column in 2 lists
+and join them after traversing the array. We cannot join them immediately because
+if we update intermediate value to 8 that will impact when we scan later indices.
 
-    return left or right or up or down
+All the test and training grids are solved correctly.
+'''
+
+
+def solve_ded97339(x):
+    row_joins = []
+    col_joins = []
+
+    for i, row in enumerate(x):
+        for j, item in enumerate(row):
+            if x[i][j] == 8:
+
+                k = len(x[0]) - 1
+                while x[i][k] == 0 and k > j:
+                    k -= 1
+
+                if k > j:
+                    row_joins.append((i, j, k))  # ((i,j), (i,k))
+
+                k = len(x) - 1
+                while x[k][j] == 0 and k > i:
+                    k -= 1
+
+                if k > i:
+                    col_joins.append((i, j, k))  # ((i,j), (k,j))
+
+    for r in row_joins:
+        for i in range(r[1], r[2] + 1):
+            x[r[0]][i] = 8
+
+    for c in col_joins:
+        for i in range(c[0], c[2] + 1):
+            x[i][c[1]] = 8
+
+    return x
 
 
 def main():

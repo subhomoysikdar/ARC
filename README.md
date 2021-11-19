@@ -82,3 +82,7 @@ When you're done with a task, use the "load task" button to open a new task.
 4. **7fe24cdd** Here we have to rotate the grid clockwise 3 times and join together to form the final grid
 
    ![7fe24cdd](apps/img/7fe24cdd.png)
+
+5. **ded97339** Here we have to join all blue cells the which have other blue cells up/down/left/right of the grid
+
+   ![ded97339](apps/img/ded97339.png)
