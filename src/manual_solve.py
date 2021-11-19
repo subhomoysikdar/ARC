@@ -5,6 +5,7 @@ import json
 import numpy as np
 import re
 
+
 # Name: Subhomoy Sikdar
 # ID: 21250101
 # Github: https://github.com/subhomoysikdar/ARC
@@ -15,6 +16,22 @@ import re
 ### examples below. Delete the three examples. The tasks you choose
 ### must be in the data/training directory, not data/evaluation.
 
+'''
+In this task we have a colored sub grid which has random shape(s)
+inside it. The output is to resize the grid to the colored sub
+grid and then flip the shape(s) inside the colored grid.
+
+Here we are using solve_1cf80156(x) function to remove the black
+cells from the main grid. Then we are using the flipr method in 
+numpy to flip the colored grid.
+
+All the test and training grids are solved correctly.
+'''
+
+def solve_7468f01a(x):
+    x = solve_1cf80156(x)
+    x = np.fliplr(x)
+    return x
 
 
 '''

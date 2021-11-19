@@ -70,3 +70,7 @@ When you're done with a task, use the "load task" button to open a new task.
 1. **1cf80156** Here we figure out the shape from the given grid
 
    ![1cf80156](apps/img/1cf80156.png)
+
+2. **7468f01a** Here we return a horizontal reflection of the colored sub grid
+
+   ![7468f01a](apps/img/7468f01a.png)
