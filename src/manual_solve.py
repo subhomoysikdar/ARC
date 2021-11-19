@@ -206,6 +206,123 @@ def solve_ded97339(x):
     return x
 
 
+'''
+In this task we have a red boundary inside the main grid. This red boundary
+is continuous along 1 axis but open along the other axis. We have grey cells
+inside this red rectangle and if the boundary is open along x axis then the 
+grey cells are reflected horizontally. Here, the upper half of the space inside the
+red rectangle is reflected horizontally on the top of the boundary and the 
+lower half is reflected horizontally below the lower half of the boundary. Similary,
+if the boundary is open vertically then the left half of the area inside the boundary
+is reflected vertically on the left of the boundary and the right half reflected 
+vertically outside the right boundary wall.
+
+It is not necessary that the boundary will be placed in the center and the boundary
+is a rectangle meaning the length and width of the boundary can be different. We first
+check the grid for red cells (2) along the grid and then when we find the first cell
+we traverse along the row and column to determine the length and width of the 
+rectangle. We also note the axis (0 meaning rectangle open along x) and reflects
+horizontally. Else axis is 1 and the reflection is along the vertical axis. We also
+note the 4 corners of the rectangle as c1, c2, c3, and c4
+
+c1 ----- c2
+|        |
+|        |
+c3 ----- c4
+
+From the corners and axis we find the mid point of the rectangle and reflect the left/right
+for axis 0 and upper/lower for axis 0. We finally mark the internal grey cells as 0 and return
+the grid. We have not used any special libraries for this code.
+
+All the test and training grids are solved correctly.
+'''
+
+
+def solve_f8a8fe49(x):
+    # get c1 - c4; tuples of x, y index of 4 corners of the red square
+    # axis 0 - horizontal reflection, 1 - vertical reflection
+    for i, row in enumerate(x):
+        for j, item in enumerate(row):
+            # reflects along horizontal line
+            if item == 2 and row[j + 1] == 2 and row[j + 2] == 2:
+                axis = 0
+                c1 = (i, j)
+
+                k = 2
+                while row[j + k] == 2:  # check length of red squares traversing the row
+                    k += 1
+                c2 = (i, j + k - 1)
+
+                k = 2
+                while x[i + k][j] == 0:
+                    k += 1
+                c3 = (i + k + 1, j)
+
+                c4 = (c3[0], c2[1])
+                break
+
+            # reflects along vertical line
+            elif item == 2 and row[j + 1] == 2 and row[j + 2] == 0:
+                axis = 1
+                c1 = (i, j)
+
+                k = 2
+                while x[i + k][j] == 2:  # check length of red squares traversing the column
+                    k += 1
+                c3 = (i + k - 1, j)
+
+                k = 2
+                while row[j + k] == 0:
+                    k += 1
+                c2 = (i, j + k + 1)
+
+                c4 = (c3[0], c2[1])
+                break
+            else:
+                continue
+        else:
+            continue
+        break
+
+    # print(c1, c2, c3, c4)
+
+    if axis == 0:
+        mid = c1[0] + (c3[0] - c1[0]) // 2  # get row index for horizontal reflection
+
+        # upper half
+        for i in range(c1[0] + 1, mid + 1):
+            for j in range(c1[1] + 1, c2[1]):
+                if x[i][j] == 5:
+                    x[c1[0] - (i - c1[0])][j] = 5  # mark reflection
+                    x[i][j] = 0  # clear original
+
+        # lower half
+        for i in range(mid, c3[0]):
+            for j in range(c1[1] + 1, c2[1]):
+                if x[i][j] == 5:
+                    x[c3[0] + (c3[0] - i)][j] = 5  # mark reflection
+                    x[i][j] = 0  # clear original
+
+    else:
+        mid = c1[1] + (c2[1] - c1[1]) // 2  # get column index for vertical reflection
+
+        # left half
+        for i in range(c1[0] + 1, c3[0]):
+            for j in range(c1[1] + 1, mid + 1):
+                if x[i][j] == 5:
+                    x[i][c1[1] - (j - c1[1])] = 5  # mark reflection
+                    x[i][j] = 0  # clear original
+
+        # right half
+        for i in range(c1[0] + 1, c3[0]):
+            for j in range(mid, c2[1]):
+                if x[i][j] == 5:
+                    x[i][c2[1] + (c2[1] - j)] = 5  # mark reflection
+                    x[i][j] = 0  # clear original
+
+    return x
+
+
 def main():
     # Find all the functions defined in this file whose names are
     # like solve_abcd1234(), and run them.

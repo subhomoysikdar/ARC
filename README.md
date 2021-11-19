@@ -86,3 +86,7 @@ When you're done with a task, use the "load task" button to open a new task.
 5. **ded97339** Here we have to join all blue cells the which have other blue cells up/down/left/right of the grid
 
    ![ded97339](apps/img/ded97339.png)
+
+6. **f8a8fe49** Here reflect the grey cells inside the red rectangle based on the side which is continuous
+
+   ![f8a8fe49](apps/img/f8a8fe49.png)
